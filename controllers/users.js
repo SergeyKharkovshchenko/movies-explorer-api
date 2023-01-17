@@ -63,7 +63,6 @@ const logout = async (req, res) => {
   await res
     .header(
       'Access-Control-Allow-Origin: *',
-    // 'Access-Control-Allow-Origin: sergey-kh.nomoredomains.club',
     )
     .clearCookie('jwt', {
       httpOnly: true,

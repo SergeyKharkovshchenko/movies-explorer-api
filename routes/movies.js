@@ -25,7 +25,6 @@ router.post(
       thumbnail: Joi.string()
         .required()
         .regex(/https{0,1}:\/\/.*/),
-      owner: Joi.string().required(),
       movieId: Joi.string().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),

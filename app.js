@@ -8,7 +8,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const { ItemNotFoundError } = require('./middlewares/errors');
 
 const { PORT = 3000 } = process.env;
-const routerCards = require('./routes/movies');
+const routerMovies = require('./routes/movies');
 const routerUsers = require('./routes/users');
 const { checkAuth } = require('./middlewares/auth');
 const {
@@ -67,7 +67,7 @@ app.post('/signin', celebrate({
 app.post('/logout', logout);
 
 app.use('/users', checkAuth, routerUsers);
-app.use('/cards', checkAuth, routerCards);
+app.use('/movies', checkAuth, routerMovies);
 app.use(errorLogger);
 app.use(errors());
 app.use('*', (req, res, next) => next(new ItemNotFoundError('Неверный запрос')));
