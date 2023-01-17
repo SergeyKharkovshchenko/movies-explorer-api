@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken');
 const User = require('../models/user');
 const { ItemNotFoundError, BadRequestError, UnauthorizedError } = require('../middlewares/errors');
 
-// const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUserMe = async (req, res, next) => {
   try {
