@@ -33,7 +33,7 @@ const deleteMovieById = async (req, res, next) => {
     if (cardCheck.owner != req.user._id) {
       throw new AccessDeniedError('Только владелец может удалить карточку');
     }
-    const card = await Card.findByIdAndRemove(req.params.cardId);
+    const card = await Card.findByIdAndRemove(req.params.movieId);
     return res.json(card);
   } catch (err) {
     if (err.name === 'CastError') {
