@@ -11,9 +11,9 @@ const getAllSavedMovies = async (req, res, next) => {
 };
 
 const createMovie = async (req, res, next) => {
-  const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail } = req.body;
+  const { country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId } = req.body;
   try {
-    const card = await Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail });
+    const card = await Movie.create({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId, owner: req.user._id });
     return res.json(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
