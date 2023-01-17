@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken');
 const User = require('../models/user');
 const { ItemNotFoundError, BadRequestError, UnauthorizedError } = require('../middlewares/errors');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+// const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUserMe = async (req, res, next) => {
   try {
@@ -85,7 +85,8 @@ const login = async (req, res, next) => {
       return next(new UnauthorizedError('Неверный пользователь или пароль'));
     }
 
-    const token = JWT.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
+    // const token = JWT.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
+    const token = JWT.sign({ _id: user._id }, 'secret-key', { expiresIn: '7d' });
     return res
       .header(
         'Access-Control-Allow-Origin: *',
