@@ -3,8 +3,8 @@ const { ItemNotFoundError, BadRequestError, AccessDeniedError } = require('../mi
 
 const getAllSavedMovies = async (req, res, next) => {
   try {
-    const cards = await Movie.find({});
-    return res.json(cards);
+    const movie = await Movie.find({});
+    return res.json(movie);
   } catch (err) {
     return next(err);
   }
@@ -30,11 +30,11 @@ const deleteMovieById = async (req, res, next) => {
       throw new ItemNotFoundError('Movie not found');
     }
     // eslint-disable-next-line eqeqeq
-    if (cardCheck.owner != req.user._id) {
+    if (movieCheck.owner != req.user._id) {
       throw new AccessDeniedError('Только владелец может удалить карточку');
     }
-    const card = await Card.findByIdAndRemove(req.params.movieId);
-    return res.json(card);
+    const movie = await Movie.findByIdAndRemove(req.params.movieId);
+    return res.json(movie);
   } catch (err) {
     if (err.name === 'CastError') {
       return next(new BadRequestError('Указан некорректный id'));
