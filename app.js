@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 // const cors = require('cors');
 const { ItemNotFoundError } = require('./middlewares/errors');
@@ -18,7 +18,7 @@ const {
 } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-// console.log(process.env.NODE_ENV); // production
+console.log(process.env.NODE_ENV); // production
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use(requestLogger);
 
 // app.use(cors(corsOptions));
 
-// app.use(cookieParser());
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 
