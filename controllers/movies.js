@@ -17,8 +17,7 @@ const {
 const getAllSavedMovies = async (req, res, next) => {
   try {
     const movie = await Movie.find({});
-    const allMovies = res.json(movie);
-    const userMovies = allMovies.filter((movieObj) => movieObj.owner === req.user._id);
+    const userMovies = res.json(movie).filter((movieObj) => movieObj.owner === req.user._id);
     return userMovies;
   } catch (err) {
     return next(err);
