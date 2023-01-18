@@ -5,14 +5,11 @@ const {
   AccessDeniedError,
 } = require('../middlewares/errors');
 
-// const getAllSavedMovies = async (req, res, next) => {
-//   try {
-//     const movie = await Movie.find({});
-//     return res.json(movie);
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
+const {
+  NOT_OWNER_TRIES_TO_DELETE,
+  WRONG_ID,
+  MOVIE_NOT_FOUND,
+} = require('../utils/config');
 
 const getAllSavedMovies = async (req, res, next) => {
   try {
@@ -25,34 +22,8 @@ const getAllSavedMovies = async (req, res, next) => {
 };
 
 const createMovie = async (req, res, next) => {
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
   try {
-    const movie = await Movie.create({
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      nameRU,
-      nameEN,
-      thumbnail,
-      movieId,
-      owner: req.user._id,
-    });
+    const movie = await Movie.create({ ...req.body, owner: req.user._id });
     return res.json(movie);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -72,16 +43,16 @@ const deleteMovieById = async (req, res, next) => {
   try {
     const movieCheck = await Movie.findById(req.params.movieId);
     if (!movieCheck) {
-      throw new ItemNotFoundError('Movie not found');
+      throw new ItemNotFoundError(MOVIE_NOT_FOUND);
     }
     if (movieCheck.owner !== req.user._id) {
-      throw new AccessDeniedError('Только владелец может удалить карточку');
+      throw new AccessDeniedError(NOT_OWNER_TRIES_TO_DELETE);
     }
     const movie = await Movie.findByIdAndRemove(req.params.movieId);
     return res.json(movie);
   } catch (err) {
     if (err.name === 'CastError') {
-      return next(new BadRequestError('Указан некорректный id'));
+      return next(new BadRequestError(WRONG_ID));
     }
     return next(err);
   }

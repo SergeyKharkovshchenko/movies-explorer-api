@@ -3,13 +3,17 @@ const { celebrate, Joi } = require('celebrate');
 
 const { updateProfile, getUserMe } = require('../controllers/users');
 
+const {
+  joiRequiredName, joiRequiredEmail,
+} = require('../utils/validation');
+
 router.get('/me', getUserMe);
 router.patch(
   '/me',
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().min(2).max(30).required(),
-      email: Joi.string().min(2).max(30).required(),
+      name: joiRequiredName(),
+      email: joiRequiredEmail(),
     }),
   }),
   updateProfile,

@@ -3,21 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { celebrate, Joi, errors } = require('celebrate');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const helmet = require('helmet');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { errors } = require('celebrate');
+const { limiter } = require('./utils/limiter');
 // const cors = require('cors');
 const { ItemNotFoundError } = require('./middlewares/errors');
+const errorsHandler = require('./middlewares/errorsHandler');
+const { DB_CONNECTION_STRING } = require('./utils/config');
 
 const { PORT = 3000 } = process.env;
-const routerMovies = require('./routes/movies');
-const routerUsers = require('./routes/users');
-const { checkAuth } = require('./middlewares/auth');
-const {
-  createUser,
-  login,
-  logout,
-} = require('./controllers/users');
+const routers = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+// const { NODE_ENV } = process.env;
 console.log(process.env.NODE_ENV); // production
 
 const app = express();
@@ -36,11 +36,10 @@ const app = express();
 // };
 
 app.use(requestLogger);
-
+app.use(limiter);
 // app.use(cors(corsOptions));
-
+app.use(helmet());
 app.use(cookieParser());
-
 app.use(bodyParser.json());
 
 // app.get('/crash-test', () => {
@@ -48,43 +47,17 @@ app.use(bodyParser.json());
 //     throw new Error('Сервер сейчас упадёт');
 //   }, 0));
 // });
+app.use(routers);
+app.use('*', (req, res, next) => next(new ItemNotFoundError('Неверный запрос')));
 
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
-app.post('/signout', logout);
-
-app.use('/users', checkAuth, routerUsers);
-app.use('/movies', checkAuth, routerMovies);
 app.use(errorLogger);
 app.use(errors());
-app.use('*', (req, res, next) => next(new ItemNotFoundError('Неверный запрос')));
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode);
-  res.json({
-    message: statusCode === 500
-      ? 'На сервере произошла ошибка'
-      : message,
-  });
-  console.log(res);
-  next();
-});
+
+app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://127.0.0.1/mestodb', {
+// mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/mestodb', {
+mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
 }, () => {
   app.listen(PORT, () => {
