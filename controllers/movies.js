@@ -45,7 +45,8 @@ const deleteMovieById = async (req, res, next) => {
     if (!movieCheck) {
       throw new ItemNotFoundError(MOVIE_NOT_FOUND);
     }
-    if (movieCheck.owner !== req.user._id) {
+    // eslint-disable-next-line eqeqeq
+    if (movieCheck.owner != req.user._id) {
       throw new AccessDeniedError(NOT_OWNER_TRIES_TO_DELETE);
     }
     const movie = await Movie.findByIdAndRemove(req.params.movieId);
