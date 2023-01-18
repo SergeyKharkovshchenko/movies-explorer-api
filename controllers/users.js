@@ -37,9 +37,7 @@ const updateProfile = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const hash = await bcryptjs.hash(req.body.password, 10);
-    console.log("hash = " + hash);
     const user = await User.create({ ...req.body, password: hash });
-    console.log("user = " + user);
     return res
       .header('Access-Control-Allow-Origin: *')
       .status(201).json({
