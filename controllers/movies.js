@@ -17,7 +17,8 @@ const {
 const getAllSavedMovies = async (req, res, next) => {
   try {
     const movie = await Movie.find({});
-    return res.json(movie.filter((movieObj) => movieObj.owner === req.user._id));
+    // eslint-disable-next-line eqeqeq
+    return res.json(movie.filter((movieObj) => movieObj.owner == req.user._id));
   } catch (err) {
     return next(err);
   }
