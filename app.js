@@ -64,7 +64,7 @@ app.post('/signin', celebrate({
   }),
 }), login);
 
-app.post('/logout', logout);
+app.post('/signout', logout);
 
 app.use('/users', checkAuth, routerUsers);
 app.use('/movies', checkAuth, routerMovies);
