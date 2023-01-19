@@ -6,6 +6,7 @@ const {
   BadRequestError,
   UnauthorizedError,
   DoubleDataError,
+  SUCCESSFUL_LOGOUT,
 } = require('../middlewares/errors');
 
 const {
@@ -43,6 +44,11 @@ const updateProfile = async (req, res, next) => {
     }
     return res.json(user);
   } catch (err) {
+    if (err.code === 11000) {
+      return next(
+        new DoubleDataError(EMAIL_EXISTS),
+      );
+    }
     return next(err);
   }
 };
@@ -73,7 +79,6 @@ const createUser = async (req, res, next) => {
         new DoubleDataError(EMAIL_EXISTS),
       );
     }
-
     return next(err);
   }
 };
@@ -86,20 +91,8 @@ const logout = (req, res) => {
       secure: true,
       sameSite: false,
     })
-    .json({ message: 'Логаут прошел успешно' });
+    .json({ message: SUCCESSFUL_LOGOUT });
 };
-
-// const logout = async (req, res) => {
-//   await res
-//     // .header('Access-Control-Allow-Origin: *')
-//     .clearCookie('jwt', {
-//       httpOnly: true,
-//       secure: true,
-//       sameSite: false,
-//     })
-//     .json({ message: 'Логаут прошел успешно' });
-//   return res;
-// };
 
 const login = async (req, res, next) => {
   try {
@@ -117,7 +110,6 @@ const login = async (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
       { expiresIn: '7d' },
     );
-    // const token = JWT.sign({ _id: user._id }, 'secret-key', { expiresIn: '7d' });
     return res
       // .header('Access-Control-Allow-Origin: *')
       .cookie('jwt', token, {

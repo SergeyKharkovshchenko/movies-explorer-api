@@ -14,7 +14,6 @@ const {
 const getAllSavedMovies = async (req, res, next) => {
   try {
     const movie = await Movie.find({});
-    // eslint-disable-next-line eqeqeq
     return res.json(movie.filter((movieObj) => movieObj.owner == req.user._id));
   } catch (err) {
     return next(err);
@@ -45,7 +44,6 @@ const deleteMovieById = async (req, res, next) => {
     if (!movieCheck) {
       throw new ItemNotFoundError(MOVIE_NOT_FOUND);
     }
-    // eslint-disable-next-line eqeqeq
     if (movieCheck.owner != req.user._id) {
       throw new AccessDeniedError(NOT_OWNER_TRIES_TO_DELETE);
     }
