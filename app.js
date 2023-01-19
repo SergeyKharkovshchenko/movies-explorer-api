@@ -51,7 +51,7 @@ app.use(errors());
 app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/mestodb', {
+mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb', {
 // mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
 }, () => {
