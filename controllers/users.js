@@ -6,7 +6,6 @@ const {
   BadRequestError,
   UnauthorizedError,
   DoubleDataError,
-  SUCCESSFUL_LOGOUT,
 } = require('../middlewares/errors');
 
 const {
@@ -15,6 +14,7 @@ const {
   SUCCESSFUL_AUTH,
   WRONG_USER_OR_PASS,
   EMAIL_EXISTS,
+  SUCCESSFUL_LOGOUT,
 } = require('../utils/config');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
