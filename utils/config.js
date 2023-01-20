@@ -8,6 +8,10 @@ const NOT_OWNER_TRIES_TO_DELETE = 'Только владелец может уд
 const MOVIE_NOT_FOUND = 'Movie not found';
 const SUCCESSFUL_LOGOUT = 'Логаут прошел успешно';
 const WRONG_REQUEST = 'Неверный запрос';
+const NOT_AUTH = 'Необходима авторизация';
+const SERVER_ERROR = 'На сервере произошла ошибка';
+const WRONG_URL = 'Неверный адрес:';
+const WRONG_EMAIL = 'Неверный емейл:';
 
 module.exports = {
   DB_CONNECTION_STRING,
@@ -20,4 +24,8 @@ module.exports = {
   NOT_OWNER_TRIES_TO_DELETE,
   SUCCESSFUL_LOGOUT,
   WRONG_REQUEST,
+  NOT_AUTH,
+  SERVER_ERROR,
+  WRONG_URL,
+  WRONG_EMAIL,
 };

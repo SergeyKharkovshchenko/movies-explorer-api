@@ -37,7 +37,7 @@ const getUserMe = async (req, res, next) => {
 const updateProfile = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(req.user._id, req.body, {
-      new: true,
+      new: true, runValidators: true,
     });
     if (!user) {
       throw new ItemNotFoundError(USER_NOT_FOUND);

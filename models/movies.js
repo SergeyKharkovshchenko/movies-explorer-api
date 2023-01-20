@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const { default: isURL } = require('validator/lib/isURL');
 
+const {
+  WRONG_URL,
+} = require('../utils/config');
+
 const MovieSchema = new mongoose.Schema({
   country: {
     type: String,
@@ -27,7 +31,7 @@ const MovieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (link) => isURL(link),
-      message: (props) => `Неверный адрес: ${props.value}`,
+      message: (props) => `${WRONG_URL} ${props.value}`,
     },
   },
   trailerLink: {
@@ -35,7 +39,7 @@ const MovieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (link) => isURL(link),
-      message: (props) => `Неверный адрес: ${props.value}`,
+      message: (props) => `${WRONG_URL} ${props.value}`,
     },
   },
   thumbnail: {

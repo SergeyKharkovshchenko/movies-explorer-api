@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { default: isEmail } = require('validator/lib/isEmail');
-// const { default: isURL } = require('validator/lib/isURL');
+const {
+  WRONG_EMAIL,
+} = require('../utils/config');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -9,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (email) => isEmail(email),
-      message: (props) => `Неверный емейл: ${props.value}`,
+      message: (props) => `${WRONG_EMAIL} ${props.value}`,
     },
   },
   password: {

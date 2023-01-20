@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const limiters = require('express-rate-limit');
 
 const limiter = limiters({

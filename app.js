@@ -8,14 +8,13 @@ const { errors } = require('celebrate');
 const { limiter } = require('./utils/limiter');
 // const cors = require('cors');
 const errorsHandler = require('./middlewares/errorsHandler');
-// const { DB_CONNECTION_STRING } = require('./utils/config');
 
 const { PORT = 3000 } = process.env;
 const routers = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { NODE_ENV } = process.env;
-console.log(process.env.NODE_ENV); // production
+console.log(process.env.NODE_ENV);
 
 const app = express();
 
@@ -52,7 +51,6 @@ app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
 mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb', {
-// mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
 }, () => {
   app.listen(PORT, () => {
