@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { limiter } = require('./utils/limiter');
-// const cors = require('cors');
+const cors = require('cors');
 const errorsHandler = require('./middlewares/errorsHandler');
 
 const { PORT = 3000 } = process.env;
@@ -18,22 +18,22 @@ console.log(process.env.NODE_ENV);
 
 const app = express();
 
-// const allowedCors = [
-//   'http://sergey-kh.nomoredomains.club/',
-//   'https://sergey-kh.nomoredomains.club/',
-//   'http://sergey-kh.nomoredomains.club',
-//   'https://sergey-kh.nomoredomains.club',
-// ];
+const allowedCors = [
+  'http://sergey-kh.dilpom.nomoredomainsclub.ru/',
+  'https://sergey-kh.dilpom.nomoredomainsclub.ru/',
+  'http://sergey-kh.dilpom.nomoredomainsclub.ru',
+  'https://sergey-kh.dilpom.nomoredomainsclub.ru',
+];
 
-// const corsOptions = {
-//   origin: allowedCors,
-//   optionsSuccessStatus: 200,
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: allowedCors,
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
 
 app.use(requestLogger);
 app.use(limiter);
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
