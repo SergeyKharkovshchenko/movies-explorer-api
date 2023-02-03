@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const { limiter } = require('./utils/limiter');
 const cors = require('cors');
+const { limiter } = require('./utils/limiter');
 const errorsHandler = require('./middlewares/errorsHandler');
 
 const { PORT = 3000 } = process.env;
