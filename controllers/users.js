@@ -58,7 +58,7 @@ const createUser = async (req, res, next) => {
     const hash = await bcryptjs.hash(req.body.password, 10);
     const user = await User.create({ ...req.body, password: hash });
     return res
-    // .header('Access-Control-Allow-Origin: *')
+    .header('Access-Control-Allow-Origin: *')
       .status(201).json({
         name: user.name,
         email: user.email,
@@ -85,7 +85,7 @@ const createUser = async (req, res, next) => {
 
 const logout = (req, res) => {
   res
-    // .header('Access-Control-Allow-Origin: *')
+    .header('Access-Control-Allow-Origin: *')
     .clearCookie('jwt', {
       httpOnly: true,
       secure: true,
@@ -111,7 +111,7 @@ const login = async (req, res, next) => {
       { expiresIn: '7d' },
     );
     return res
-      // .header('Access-Control-Allow-Origin: *')
+      .header('Access-Control-Allow-Origin: *')
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
