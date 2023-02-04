@@ -19,11 +19,11 @@ console.log(process.env.NODE_ENV);
 const app = express();
 
 const allowedCors = [
+  'http://sergey-kh.dilpom.nomoredomainsclub.ru',
+  'https://sergey-kh.dilpom.nomoredomainsclub.ru',
   'http://localhost:3000',
   'http://sergey-kh.dilpom.nomoredomainsclub.ru/',
   'https://sergey-kh.dilpom.nomoredomainsclub.ru/',
-  'http://sergey-kh.dilpom.nomoredomainsclub.ru',
-  'https://sergey-kh.dilpom.nomoredomainsclub.ru',
 ];
 
 const corsOptions = {

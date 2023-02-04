@@ -25,7 +25,9 @@ const getUserMe = async (req, res, next) => {
     if (!user) {
       throw new ItemNotFoundError(USER_NOT_FOUND);
     }
-    return res.status(200).json(user);
+    return res
+      .header('Access-Control-Allow-Origin: *')
+      .status(200).json(user);
   } catch (err) {
     if (err.name === 'CastError') {
       return next(new BadRequestError(WRONG_ID));
@@ -58,7 +60,7 @@ const createUser = async (req, res, next) => {
     const hash = await bcryptjs.hash(req.body.password, 10);
     const user = await User.create({ ...req.body, password: hash });
     return res
-    .header('Access-Control-Allow-Origin: *')
+      .header('Access-Control-Allow-Origin: *')
       .status(201).json({
         name: user.name,
         email: user.email,
