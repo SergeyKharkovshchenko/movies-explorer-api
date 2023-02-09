@@ -6,7 +6,7 @@ const joiRequiredName = () => Joi.string().required().min(2).max(30);
 const joiRequiredUrl = () => Joi.string().required().regex(/https{0,1}:\/\/.*/);
 const joiRequiredEmail = () => Joi.string().required().email();
 const joiRequiredPassword = () => Joi.string().required();
-const joiRequiredId = () => Joi.string().length(24).required().hex();
+const joiRequiredId = () => Joi.string().length(24).required().regex(/[A-Fa-f0-9]$/);
 
 module.exports = {
   joiRequiredString,
