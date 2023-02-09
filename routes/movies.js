@@ -29,11 +29,12 @@ router.post(
   }),
   createMovie,
 );
+
 router.delete(
-  '/:movie_id',
+  '/:_id',
   celebrate({
     params: Joi.object().keys({
-      movie_id: joiRequiredId(),
+      _id: joiRequiredId(),
     }),
   }),
   deleteMovieById,

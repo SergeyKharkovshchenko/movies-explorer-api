@@ -40,14 +40,14 @@ const createMovie = async (req, res, next) => {
 
 const deleteMovieById = async (req, res, next) => {
   try {
-    const movieCheck = await Movie.findById(req.params.movieId);
+    const movieCheck = await Movie.findById(req.params._id);
     if (!movieCheck) {
       throw new ItemNotFoundError(MOVIE_NOT_FOUND);
     }
     if (movieCheck.owner != req.user._id) {
       throw new AccessDeniedError(NOT_OWNER_TRIES_TO_DELETE);
     }
-    const movie = await Movie.findByIdAndRemove(req.params.movieId);
+    const movie = await Movie.findByIdAndRemove(req.params._id);
     return res.json(movie);
   } catch (err) {
     if (err.name === 'CastError') {
