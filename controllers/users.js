@@ -91,7 +91,7 @@ const logout = (req, res, next) => {
     const token = JWT.sign(
       { _id },
       NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
-      { expiresIn: '7d' },
+      { expiresIn: -1 },
     );
 
     return res
@@ -99,8 +99,8 @@ const logout = (req, res, next) => {
       .cookie('jwt', token, {
         maxAge: 0,
         httpOnly: true,
+        sameSite: 'none',
         secure: true,
-        sameSite: false,
       })
       // .clearCookie('jwt', {
       //   httpOnly: true,
