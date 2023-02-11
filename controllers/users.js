@@ -137,7 +137,7 @@ const login = async (req, res, next) => {
         sameSite: 'none',
         secure: true,
       })
-      .json({ user, message: SUCCESSFUL_AUTH });
+      .json(user.name, user._id, user.email, { message: SUCCESSFUL_AUTH });
   } catch (err) {
     return next(err);
   }
