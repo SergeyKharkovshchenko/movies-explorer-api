@@ -85,15 +85,32 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const logout = (req, res) => {
-  res
-    .header('Access-Control-Allow-Origin: *')
-    .clearCookie('jwt', {
-      httpOnly: true,
-      secure: true,
-      sameSite: false,
-    })
-    .json({ message: SUCCESSFUL_LOGOUT });
+const logout = (req, res, next) => {
+  const { _id } = req.body;
+  try {
+    const token = JWT.sign(
+      { _id },
+      NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
+      { expiresIn: '7d' },
+    );
+
+    return res
+      .header('Access-Control-Allow-Origin: *')
+      .cookie('jwt', token, {
+        maxAge: 0,
+        httpOnly: true,
+        secure: true,
+        sameSite: false,
+      })
+      // .clearCookie('jwt', {
+      //   httpOnly: true,
+      //   secure: true,
+      //   sameSite: false,
+      // })
+      .json({ message: SUCCESSFUL_LOGOUT });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 const login = async (req, res, next) => {
