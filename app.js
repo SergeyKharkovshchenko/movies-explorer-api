@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const { limiter } = require('./utils/limiter');
@@ -35,7 +35,7 @@ const corsOptions = {
 app.use(requestLogger);
 app.use(limiter);
 app.use(cors(corsOptions));
-app.use(helmet());
+// app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
