@@ -34,7 +34,8 @@ const corsOptions = {
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb');
+    const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
+    // const conn = await mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb');
     // , {
     //   useNewUrlParser: true,
     // }
