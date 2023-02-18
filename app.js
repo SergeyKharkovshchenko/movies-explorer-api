@@ -52,7 +52,7 @@ app.use(errors());
 app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://kharkovchenko:<password>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://kharkovchenko:<Mongobd123>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
 }, () => {
   app.listen(PORT, () => {
