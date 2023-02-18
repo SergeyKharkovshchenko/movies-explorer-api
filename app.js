@@ -35,11 +35,16 @@ const corsOptions = {
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
-    // const conn = await mongoose.connect('mongodb+srv://"kharkovchenko":"Mongobd123"@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority');
-    // , {
-    //   useNewUrlParser: true,
-    // });
+    // const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
+    const conn = await mongoose.connect(
+      'mongodb+srv://kharkovchenko:Mongobd123@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: true,
+      },
+    );
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
