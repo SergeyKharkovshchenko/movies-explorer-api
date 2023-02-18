@@ -13,13 +13,14 @@ const { PORT = 3000 } = process.env;
 const routers = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-// const { NODE_ENV } = process.env;
-// console.log(process.env.NODE_ENV);
+const { NODE_ENV } = process.env;
+console.log(process.env.NODE_ENV);
 
 const app = express();
 
 const connectDB = async () => {
   try {
+    mongoose.set('strictQuery', false);
     const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
@@ -60,7 +61,6 @@ app.use(errors());
 
 app.use(errorsHandler);
 
-mongoose.set('strictQuery', false);
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log('listening for requests');
