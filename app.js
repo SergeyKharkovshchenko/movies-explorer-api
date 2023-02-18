@@ -13,6 +13,7 @@ const { PORT = 3000 } = process.env;
 const routers = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+// eslint-disable-next-line no-unused-vars
 const { NODE_ENV } = process.env;
 console.log(process.env.NODE_ENV);
 
