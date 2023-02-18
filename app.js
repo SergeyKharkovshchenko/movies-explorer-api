@@ -19,9 +19,12 @@ console.log(process.env.NODE_ENV);
 const app = express();
 
 const connectDB = async () => {
+  mongoose.set('strictQuery', false);
   try {
-    mongoose.set('strictQuery', false);
-    const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
+    const conn = mongoose.connect(
+      process.env.DB_CONNECTION_STRING,
+      { useNewUrlParser: true },
+    );
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
