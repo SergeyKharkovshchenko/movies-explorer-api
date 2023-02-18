@@ -40,9 +40,6 @@ const connectDB = async () => {
       'mongodb+srv://kharkovchenko:Mongodb123@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority',
       {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: true,
       },
     );
     console.log(`MongoDB Connected: ${conn.connection.host}`);
