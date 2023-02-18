@@ -13,7 +13,6 @@ const { PORT = 3000 } = process.env;
 const routers = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-// eslint-disable-next-line no-unused-vars
 const { NODE_ENV } = process.env;
 console.log(process.env.NODE_ENV);
 
@@ -35,9 +34,8 @@ const corsOptions = {
 
 const connectDB = async () => {
   try {
-    // const conn = await mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
     const conn = await mongoose.connect(
-      'mongodb+srv://kharkovchenko:Mongodb123@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority',
+      NODE_ENV.DB_CONNECTION_STRING,
       {
         useNewUrlParser: true,
       },
@@ -68,13 +66,6 @@ app.use(errors());
 app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-// mongoose.connect('mongodb+srv://kharkovchenko:<Mongobd123>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
-//   useNewUrlParser: true,
-// }, () => {
-//   app.listen(PORT, () => {
-//     console.log(`App works, port ${PORT}`);
-//   });
-// });
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log('listening for requests');
