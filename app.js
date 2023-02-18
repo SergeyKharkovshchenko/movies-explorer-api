@@ -18,20 +18,6 @@ console.log(process.env.NODE_ENV);
 
 const app = express();
 
-const connectDB = async () => {
-  mongoose.set('strictQuery', false);
-  try {
-    const conn = mongoose.connect(
-      process.env.DB_CONNECTION_STRING,
-      { useNewUrlParser: true },
-    );
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-};
-
 const allowedCors = [
   'http://sergey-kh.dilpom.nomoredomainsclub.ru',
   'https://sergey-kh.dilpom.nomoredomainsclub.ru',
@@ -64,16 +50,21 @@ app.use(errors());
 
 app.use(errorsHandler);
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log('listening for requests');
-  });
-});
+mongoose.set('strictQuery', false);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb', {
+      useNewUrlParser: true,
+    }, () => {
+      app.listen(PORT, () => {
+        console.log(`App works, port ${PORT}`);
+      });
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
-// mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb', {
-//   useNewUrlParser: true,
-// }, () => {
-//   app.listen(PORT, () => {
-//     console.log(`App works, port ${PORT}`);
-//   });
-// });
+connectDB();
