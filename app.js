@@ -35,7 +35,7 @@ const corsOptions = {
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      NODE_ENV.DB_CONNECTION_STRING,
+      process.env.DB_CONNECTION_STRING,
       {
         useNewUrlParser: true,
       },
