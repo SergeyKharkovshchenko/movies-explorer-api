@@ -33,6 +33,18 @@ const corsOptions = {
   credentials: true,
 };
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect('mongodb+srv://kharkovchenko:<Mongobd123>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
 app.use(requestLogger);
 app.use(limiter);
 app.use(cors(corsOptions));
@@ -52,10 +64,15 @@ app.use(errors());
 app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://kharkovchenko:<Mongobd123>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-}, () => {
+// mongoose.connect('mongodb+srv://kharkovchenko:<Mongobd123>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+// }, () => {
+//   app.listen(PORT, () => {
+//     console.log(`App works, port ${PORT}`);
+//   });
+// });
+connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`App works, port ${PORT}`);
+    console.log('listening for requests');
   });
 });
