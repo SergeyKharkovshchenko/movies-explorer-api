@@ -35,9 +35,10 @@ const corsOptions = {
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb+srv://kharkovchenko:Mongobd123@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
-      useNewUrlParser: true,
-    });
+    const conn = await mongoose.connect('mongodb+srv://kharkovchenko:Mongobd123@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority');
+    // , {
+    //   useNewUrlParser: true,
+    // });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
