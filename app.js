@@ -51,7 +51,7 @@ app.use(errors());
 app.use(errorsHandler);
 
 mongoose.set('strictQuery', false);
-mongoose.connect(NODE_ENV === 'production' ? process.env.DB_CONNECTION_STRING : 'mongodb://127.0.0.1/bitfilmsdb', {
+mongoose.connect('mongodb+srv://kharkovchenko:<password>@cluster0.l1pn8hw.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
 }, () => {
   app.listen(PORT, () => {
