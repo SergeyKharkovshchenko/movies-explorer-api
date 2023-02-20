@@ -25,6 +25,8 @@ const allowedCors = [
   'http://localhost:3000',
   'http://sergey-kh.dilpom.nomoredomainsclub.ru/',
   'https://sergey-kh.dilpom.nomoredomainsclub.ru/',
+  'https://movies-explorer-frontend-ivory.vercel.app/',
+  'https://movies-explorer-frontend-ivory.vercel.app',
 ];
 
 const corsOptions = {
