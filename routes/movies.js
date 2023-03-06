@@ -25,6 +25,7 @@ router.post(
       movieId: joiRequiredNumber(),
       nameRU: joiRequiredString(),
       nameEN: joiRequiredString(),
+      id: joiRequiredString(),
     }),
   }),
   createMovie,
